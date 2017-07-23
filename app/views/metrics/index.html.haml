@@ -1,0 +1,78 @@
+%div{'ng-app' => 'metricsApp'}
+  %div{'ng-controller' => 'metricsCtrl as metricsctrl'}
+    %div.col-md-3
+      %div.metrics-sidebar-list{'ng-cloak' => '', 'ng-show' => 'metricsctrl.fastMoveModeActive'}
+
+        %div.metrics-sidebar-line{'ng-repeat' => 'metric in metricsctrl.metricSet.metrics', 'ng-init' => 'metricsctrl.setMetricRank(metric, metric.rank); metricsctrl.setMetricValue(metric, 0)'}
+          %a.text-right.metrics-sidebar-target{:href => '', 'ng-click' => 'metricsctrl.finalizeMovingMetric(-1)', 'ng-show' => '$index == 0'}
+            %span.text-left ← Move here
+            %strong 0
+          %div.metrics-sidebar-source
+            %strong {{metric.rank + 1}}
+            %a.black-link{:href => '', 'ng-show' => 'true', 'ng-click' => 'metricsctrl.startMovingMetric(metric)'} {{metric.name}}
+          %a.text-right.metrics-sidebar-target{:href => '', 'ng-click' => 'metricsctrl.finalizeMovingMetric(metric.rank)'}
+            %span.text-left ← Move here
+            %strong {{metric.rank + 1}}
+
+    %div{'ng-class' => 'metricsctrl.fastMoveModeActive ? "col-md-9" : "col-md-12"'}
+      %div
+        -# {'ng-controller' => 'metricsCtrl as metricsctrl'}
+        %a.cancel-movement-button.text-center{:href => '', 'ng-show' => 'metricsctrl.moveModeActive', 'ng-click' => 'metricsctrl.cancelMovingMetric()'} Cancel moving "{{metricsctrl.movementTarget.name}}"
+
+        %script
+          = render 'metricsService.js.erb'
+        %div.content-box.col-md-12.row#team-header
+          %p= link_to @organization.name, organization_page_path(@organization.name)
+          %h3= link_to @team.name, team_page_path(@organization.name, @team.name)
+          %p.text-center
+            %span#metrics-page-event-name= @event.name
+          %p.text-right= link_to "Show dashboard", event_page_path(urlify(@organization.name), urlify(@team.name), @event.id), :class => 'btn btn-default'
+
+          %hr
+          %pre.description-pre= @event.description
+
+        %h2.non-box-text.text-center{'ng-show' => 'metricsctrl.metricSet.metrics.length > 0'} Metrics
+        %div#metrics-box{'ng-class' => '{"metrics-box-scaled": metricsctrl.moveModeActive==true}'}
+          %div.metric{'ng-repeat' => 'metric in metricsctrl.metricSet.metrics', 'ng-init' => 'metricsctrl.setMetricRank(metric, metric.rank); metricsctrl.setMetricValue(metric, 0)'}
+
+            %div.move-button-target-container.row.col-xs-12.col-md-6.col-md-offset-3.row
+              %a.text-center.move-button-target.col-xs-12.col-md-12{:href => '', 'ng-show' => 'metricsctrl.moveModeActive && $index == 0', 'ng-click' => 'metricsctrl.finalizeMovingMetric(-1)'}
+                Move here -
+                %strong 0
+
+            %div.metric-row.content-box.col-md-6.col-md-offset-3.row{:class => '{{metricsctrl.determineMetricClass(metric)}}', :id => '{{metricsctrl.metricCardIdPrefix}}{{metric.rank}}', 'ng-class' => '{"metrics-box-scaled": metricsctrl.moveModeActive==true}'}
+
+              %div.move-button-source-container
+                %a.move-button-source{:href => '', 'ng-show' => '!metricsctrl.moveModeActive', 'ng-click' => 'metricsctrl.startMovingMetric(metric)'} Move
+
+              %p.metric-name {{metric.name}}
+              %span.metric-number {{metric.rank + 1}}
+              %div.description-toggle
+                %a{:href => '', 'ng-click' => 'showDescription = !showDescription'} Description
+              %div.metric-description.col-md-12.col-xs-12.row{'ng-show' => 'showDescription'}
+                %pre {{metric.description}}
+
+
+              %div.metric-value-buttons.btn-group.btn-group-justified
+                %a.btn.btn-default.btn-negative{:href => '', 'ng-click' => 'metricsctrl.setMetricValue(metric, -1)'} Argh!
+                %a.btn.btn-default.btn-indifferent{:href => '', 'ng-click' => 'metricsctrl.setMetricValue(metric, 0)'} OK.
+                %a.btn.btn-default.btn-positive{:href => '', 'ng-click' => 'metricsctrl.setMetricValue(metric, 1)'} Yeah!
+
+            %div.move-button-target-container.row.col-xs-12.col-md-6.col-md-offset-3.row
+              %a.text-center.move-button-target.col-xs-12.col-md-12{:href => '', 'ng-show' => 'metricsctrl.moveModeActive', 'ng-click' => 'metricsctrl.finalizeMovingMetric(metric.rank)'}
+                Move here -
+                %strong {{metric.rank + 1}}
+
+        %div
+          %a.gray-link.metrics-sidebar-toggle{:href => '', 'ng-click' => 'metricsctrl.toggleFastMoveMode()'} {{metricsctrl.fastMoveModeActive ? '← Hide sidebar': '→ Show sidebar'}}
+
+        %div.submission-box.content-box.col-md-6.col-md-offset-3.row{'ng-show' => '!metricsctrl.successfullySubmitted'}
+          %p#submission-flash.text-center
+            %strong {{metricsctrl.flash}}
+          %a.btn.btn-primary.col-md-2.col-md-offset-5.col-xs-4.col-xs-offset-4{{'ng-click' => 'metricsctrl.sendMetrics()'}} Send
+
+        %div.content-box.col-md-12.row#navigation-box{'ng-show' => 'metricsctrl.successfullySubmitted'}
+          %div.col-md-1.col-md-offset-3
+            = link_to 'Team page', team_page_path(@organization.name, @team.name), {:class => 'btn btn-primary'}
+          %div.col-md-1.col-md-offset-3
+            = link_to 'Profile', home_path, {:class => 'btn btn-primary'}

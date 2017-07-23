@@ -1,0 +1,14 @@
+one:
+  name: Red Test Metric Type
+  description: This is Red Test Metric Type.
+  event_id: 1
+
+two:
+  name: Green Test Metric Type
+  description: This is Green Test Metric Type.
+  event_id: 2
+
+three:
+  name: Blue Test Metric Type
+  description: This is Blue Test Metric Type.
+  event_id: 1

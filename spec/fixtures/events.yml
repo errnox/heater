@@ -1,0 +1,17 @@
+one:
+  name: Red Event
+  description: This is Red Event.
+  annotation: No annotation
+  team_id: 1
+
+two:
+  name: Green Event
+  description: This is Green Event.
+  annotation: No annotation
+  team_id: 2
+
+three:
+  name: Blue Event
+  description: This is Blue Event.
+  annotation: No annotation
+  team_id: 1

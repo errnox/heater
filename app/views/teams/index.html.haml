@@ -1,0 +1,123 @@
+%div{'ng-app' => 'teamApp'}
+  %div.col-md-12{'ng-controller' => 'membershipCtrl as membershipctrl'}
+    %div.content-box
+      %script
+        = render 'teamService.js.erb'
+      %p= link_to @organization.name, organization_page_path(urlify(@organization.name)), :class => 'gray-link'
+      %h3= @team.name
+
+      %div.row
+        %div.col-md-2 {{membershipctrl.teamMembers.length}} Member{{membershipctrl.teamMembers.length == 1 ? '' : 's'}}
+        %div.col-md-10
+          %span{'ng-repeat' => 'member in membershipctrl.teamMembers' }
+            %a{:href => '{{membershipctrl.userProfileURL}}{{member.name}}'} {{member.name}}{{$last ? '' : ', '}}
+
+      %div.container
+        %div.col-md-2.col-md-offset-10.col-xs-3.col-xs-offset-2#join-button
+          %a.btn.btn-primary{'ng-click' => 'membershipctrl.toggleMembership()'} {{membershipctrl.buttonText}}
+
+    %h2.non-box-text Description
+    %div.content-box
+      %pre.beautiful-pre= @team.description
+
+    %h2.non-box-text Create New Event
+    %div.col-md-12
+      %div.row.content-box{:id => '{{membershipctrl.createNewEventElementId}}'}
+
+        %div.container
+          %p Presets:
+          %a.gray-link-pill{:href => '', 'ng-click' => 'membershipctrl.usePreset("CHAMPFROGS")'} CHAMPFROGS
+          %span (
+          %a.gray-link{:href => 'http://www.noop.nl/2013/02/champfrogs.html'} Learn more
+          %span ),
+          %a.gray-link-pill{:href => '', 'ng-click' => 'membershipctrl.usePreset("Declaration of Independence")'} Declaration of Independence
+          %a.gray-link-pill{:href => '', 'ng-click' => 'membershipctrl.usePreset("Maslow")'} Maslow
+          %span ,
+          %a.gray-link-pill{:href => '', 'ng-click' => 'membershipctrl.usePreset("SCARF")'} SCARF
+          %span ,
+          %a.gray-link-pill{:href => '', 'ng-click' => 'membershipctrl.usePreset("Self-Determination Theory")'} Self-Determination Theory
+
+        %form.event-form{:name => 'eventForm'}
+          %div.row
+            %div.col-md-5
+              %span Event name:
+              %span.error-message{'ng-show' => "eventForm.eventName.$error.required && !eventForm.eventName.$pristine"} An event name is required.
+              %input.form-control{:type => 'text', 'ng-focus' => 'membershipctrl.addFirstMetricType()', 'ng-model' => 'membershipctrl.newEvent.name', 'required' => '', :name => 'eventName'}
+            %div.col-md-6
+              %span Event description:
+              %textarea.form-control{'ng-focus' => 'membershipctrl.addFirstMetricType()', 'ng-model' => 'membershipctrl.newEvent.description', :name => 'eventDescription'}
+
+          %hr{'ng-show' => 'membershipctrl.newEvent.metricTypes.length > 0'}
+
+          %p.text-center
+            %a.btn.btn-default{:href => '', 'ng-click' => 'membershipctrl.clearMetricTypes()', 'ng-show' => 'membershipctrl.newEvent.metricTypes.length != 0'} × Clear all metric types
+
+          %div.row.metric-type-row{'ng-repeat' => 'metricType in membershipctrl.newEvent.metricTypes'}
+            %div.col-md-1
+              %p.text-center#metric-type-index {{$index + 1}}
+            %div.col-md-4
+              -# %span Metric name:
+              %input.form-control{:type => 'text', :placeholder => 'Metric name (required)', 'ng-model' => 'metricType.name', 'required' => '', :name => 'metricName'}
+            %div.col-md-5
+              -# %span Metric description:
+              %textarea.form-control{:rows => 1, :placeholder => 'Metric description', 'ng-model' => 'metricType.description', :name => 'metricDescription'}
+            %div.col-md-2
+              %a{:href => '#', 'ng-click' => 'membershipctrl.removeMetricType(metricType)'} × Remove
+
+          %div.row
+            %p.text-center.error-message{'ng-show' => 'eventForm.metricName.$error.required && !eventForm.metricName.$pristine'} Metric names are required.
+          %div.row
+            %div.col-md-2.col-md-offset-3
+            %a{:href => '#', 'ng-click' => 'membershipctrl.addMetricType()', 'ng-show' => 'membershipctrl.newEvent.metricTypes.length > 0'} + Add metric
+
+          %hr
+          %div{:id => '{{membershipctrl.flashMessageElementId}}'}
+            %p.text-center
+              %strong {{membershipctrl.flash}}
+            %p.text-center
+              %input.btn.btn-primary{:href => '#', 'ng-click' => 'membershipctrl.createNewEvent()', :type => 'button', 'ng-disabled' => 'eventForm.$invalid', :value => 'Create'}
+            %div#newly-created-events{'ng-show' => 'membershipctrl.newlyCreatedEvents.length > 0'}
+              %p Newly created event{{membershipctrl.newlyCreatedEvents.length > 1 ? 's' : ''}}:
+              %ol.list-row
+                %li{'ng-repeat' => 'newEvent in membershipctrl.newlyCreatedEvents'}
+                  %a{:href => "{{membershipctrl.metricsURL}}{{newEvent.id}}"} {{newEvent.name}}
+
+    %h2.non-box-text
+      = @events_num
+      Events
+    %div.content-box-pure
+      %div.block-content
+        %p Search event names and descriptions:
+        %form{'ng-submit' => 'membershipctrl.searchEvents()'}
+          %div.col-md-10
+            %input.form-control{:type => 'text', 'ng-model' => 'membershipctrl.eventsSearchQuery', :placeholder => 'Event Name'}
+          %div.col-md-2.col-xs-offset-2.col-md-offset-0
+            %input.btn.btn-default{:type => 'submit', :value => 'Search'}
+        %p.gray-text.text-center
+          (Max. number of events returned:
+          = @events_search_result_limit
+          , sorted by age - latest first)
+        %a.col-md-offset-5.btn.btn-default{:href => '', 'ng-show' => 'membershipctrl.eventsSearchActive', 'ng-click' => 'membershipctrl.clearEventsSearch()'} × Clear search results ({{membershipctrl.events.length}})
+
+      %p.block-content{'ng-show' => 'membershipctrl.events.length == 0'} No events
+      %div.block-pure.event-row{'ng-repeat' => 'event in membershipctrl.events'}
+        %a.black-link{:href => '{{membershipctrl.metricsURL}}{{event.id}}'} {{event.name}}
+        \-
+        %a.gray-link{:href => '{{membershipctrl.eventPageURL}}{{event.id}}'} Dashboard
+        %span.event-time-stamp {{event.created_at | date:'medium'}}
+
+      %div.row.block-content{'ng-show' => '!membershipctrl.eventsSearchActive'}
+        %div.col-md-1.col-md-offset-4.col-xs-3.col-xs-offset-1
+          %a.button-prev-next{:href => '', 'ng-click' => 'membershipctrl.previousPage()', 'ng-show' => 'membershipctrl.previousPageNum > 0'} ←
+        %div.col-md-1.col-xs-3
+          %p.text.center{'ng-show' => 'membershipctrl.pagesTotal > membershipctrl.nextPageNum - 1'}
+            %strong {{membershipctrl.nextPageNum - 1}}/{{membershipctrl.pagesTotal}}
+        %div.col-md-1.col-xs-3
+          %a.button-prev-next{:href => '', 'ng-click' => 'membershipctrl.nextPage()', 'ng-show' => 'membershipctrl.nextPageNum <= membershipctrl.pagesTotal'} →
+
+    %h2.non-box-text
+      {{membershipctrl.teamMembers.length}} Team Member{{membershipctrl.teamMembers.length == 1 ? '' : 's'}}
+    %div.content-box
+      %span{'ng-repeat' => 'member in membershipctrl.teamMembers' }
+        %a{:href => '{{membershipctrl.userProfileURL}}{{member.name}}'} {{member.name}}
+        {{$index < (membershipctrl.teamMembers.length - 1) ? ", " : "" }}

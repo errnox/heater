@@ -1,0 +1,370 @@
+@import 'vendor/bootstrap.min';
+@import 'vendor/font-awesome.min';
+@import 'partials/base';
+
+body {
+  background-color: $light-gray;
+}
+
+$header-height: 50px;
+.header {
+  background-color: $white;
+  width: 100%;
+  height: $header-height;
+  @media (max-width: 992px) {
+    margin-bottom: 30px;
+  }
+}
+
+.main-header-bar {
+  width: 85%;
+  margin: auto;
+}
+
+.logo {
+  color: $text-black;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: inline-block;
+  padding-top: 10px;
+}
+
+#username-panel {
+  padding-top: 15px;
+  @media (max-width: 992px) {
+    right: 0;
+    position: absolute;
+    margin-top: 60px;
+  }
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.flash-message {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 50px;
+}
+
+.content-box {
+  background-color: $white;
+  padding: $content-box-padding;
+}
+
+.content-box h1, h2, h3, h4, h5, h6, p {
+  color: $text-black !important;
+}
+
+.content-box ul li {
+  list-style: none;
+}
+
+.content-box ul li:before {
+  content: "- ";
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.content-box-pure {
+  background-color: $white;
+  padding: 0 !important;
+
+  .block-content {
+    padding: $content-box-padding;
+  }
+
+  .block-pure {
+    /* margin-bottom: 10px; */
+    border-bottom: 1px solid darken($white, 20%);
+    border-top: 1px solid $white;
+    background-color: darken($white, 5%);
+    padding-left: $content-box-padding;
+    padding-right: $content-box-padding;
+    padding-top: $content-box-padding / 2;
+    padding-bottom: $content-box-padding / 2;
+  }
+
+  div:not(.block-pure) {
+    padding: $content-box-padding;
+  }
+}
+
+.non-box-text {
+  color: $text-black !important;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.current-user-name {
+  color: $text-black;
+}
+
+.current-user-name:hover {
+  color: $button-primary-bg;
+  text-decoration: none;
+}
+
+.non-box-text {
+  padding: $content-box-padding;
+}
+
+.btn-primary {
+  &:hover {
+    background-color: lighten($button-primary-bg, 10%);
+    border: 1px solid lighten($button-primary-bg, 15%);
+  }
+  background-color: $button-primary-bg;
+  border: 1px solid darken($button-primary-bg, 5%);
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.btn-default {
+  &:hover {
+    background-color: lighten($button-default-bg, 2%) !important;
+    border: 1px solid lighten($button-default-bg, 4%) !important;
+  }
+  background-color: $button-default-bg !important;
+  border: 1px solid darken($button-default-bg, 5%) !important;
+  border-radius: 4px;
+  padding: 10px !important;
+  text-decoration: none !important;
+}
+
+.button-fixed-width {
+  display: inline-block;
+  min-width: 100px !important;
+}
+
+// Previous/next buttons
+.button-prev-next {
+  color: $white;
+  &:hover {
+    text-decoration: none;
+    @include single-transition(top, 350ms, ease-out, 450ms);
+    background-color: darken($dark-gray, 5%) !important;
+    color: $white;
+  }
+  @include single-transition(top, 350ms, ease-out, 450ms);
+  &:focus, &:active, &:visited {
+    text-decoration: none;
+  }
+  background-color: darken($dark-gray, 15%) !important;
+  font-size: 1.8em;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+input[type=text], input[type=password] {
+  background-color: $white;
+}
+
+a {
+  color: darken($button-primary-bg, 10%);
+}
+
+.underlined {
+  border-bottom: 1px solid $dark-gray;
+}
+
+.description-pre {
+  font-family: Helvetica;
+  border: none;
+  background-color: $white;
+  color: $text-black;
+  margin-left: 0px;
+}
+
+
+// Links
+
+.gray-link {
+  &:active, &:focus {
+    color: $dark-gray !important;
+    text-decoration: none;
+  }
+  &:hover {
+    color: $text-black !important;
+    text-decoration: none;
+  }
+  color: $dark-gray !important;
+  text-decoration: none;
+}
+
+.gray-text {
+  color: $dark-gray !important;
+}
+
+.black-link {
+  &:active, &:focus {
+    color: $text-black !important;
+    text-decoration: none;
+  }
+  &:hover {
+    color: $button-primary-bg !important;
+    text-decoration: none;
+  }
+  color: $text-black !important;
+  text-decoration: none;
+}
+
+.gray-link-pill {
+  &:active, &:focus {
+    background-color: $dark-gray !important;
+    color: $white;
+    text-decoration: none;
+  }
+  &:hover {
+    background-color: lighten($dark-gray, 5%) !important;
+    color: $white !important;
+    text-decoration: none;
+  }
+  background-color: $dark-gray !important;
+  color: $white;
+  text-decoration: none;
+  border-radius: 100px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.gray-text {
+  color: $dark-gray !important;
+}
+
+
+// Tooltip
+$overlay-min-height: 30px;
+$overlay-min-width: 100px;
+.abc-tooltip-trigger:hover ~.abc-tooltip, .abc-tooltip-trigger:hover .abc-tooltip {
+  opacity: 1;
+  z-index: 99999;
+  @include single-transition(top, 350ms, ease-out, 450ms);
+}
+
+.abc-tooltip {
+  @include single-transition(top, 350ms, ease-out, 450ms);
+  opacity: 0;
+  position: absolute;
+  z-index: -99999;
+  top: -500px;
+  width: auto;
+  top: 0;
+  &:hover {
+    opacity: 1;
+    z-index: 99999;
+    top: 0;
+  }
+}
+
+// List rows
+.list-row {
+  $background-color: lighten($light-gray, 5%);
+  $background-color: $light-blue;
+  background-color: $background-color;
+  margin-left: -$content-box-padding !important;
+  margin-right: -$content-box-padding !important;
+  padding-left: $content-box-padding;
+  padding-right: $content-box-padding;
+  padding-top: $content-box-padding / 2;
+  padding-bottom: $content-box-padding / 2;
+  border-bottom: 1px solid darken($background-color, 5%);
+}
+
+.link-secondary {
+  $font-color: $text-black;
+  &:focus, &:active {
+    color: $text-black;
+    text-decoration: none;
+  }
+  &:hover {
+    color: $button-primary-bg;
+    text-decoration: none;
+  }
+  color: $font-color;
+  text-decoration: none;
+}
+
+.link-tertiary {
+  $font-color: $dark-gray;
+  &:focus, &:active {
+    color: $text-black;
+    text-decoration: none;
+  }
+  &:hover {
+    color: $button-primary-bg;
+    text-decoration: none;
+  }
+  color: $font-color;
+  text-decoration: none;
+}
+
+.clean-row {
+  padding: 0;
+  .row {
+    margin: 0;
+  }
+}
+
+// Navigation list
+
+.nav-list {
+  margin-left: -$content-box-padding;
+  margin-right: -$content-box-padding;
+  background-color: darken($white, 5%);
+  padding: 0;
+  li {
+    border-bottom: 1px solid darken($white, 10%);
+    min-height: 2 * $content-box-padding;
+    &:before {
+      content: "" !important;
+    }
+    display: block;
+  }
+  li a {
+    position: absolute;
+    padding: $content-box-padding / 2;
+    width: 100%;
+    height: 100%;
+    color: $text-black;
+    text-decoration: none;
+    &:focus, &:active {
+      color: $dark-gray;
+      text-decoration: none;
+    }
+    &:hover {
+      background-color: $white;
+      text-decoration: none;
+      @include single-transition(all, 250ms, ease-out, 0ms);
+    }
+    @include single-transition(all, 250ms, ease-out, 0ms);
+  }
+  .nav-list-item {
+    position: relative;
+  }
+}
+
+
+//=========================================================================
+// Imports
+//=========================================================================
+
+// Pages
+@import 'partials/application';
+@import 'partials/signup';
+@import 'partials/settings';
+@import 'partials/organization';
+@import 'partials/all_organizations';
+@import 'partials/team';
+@import 'partials/metrics';
+@import 'partials/event';
+@import 'partials/home';
+
+// General
+@import 'partials/forms';

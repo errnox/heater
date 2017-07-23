@@ -1,0 +1,14 @@
+@import 'base';
+
+#cancel-button a {
+  font-size: 50px;
+  font-weight: bold;
+  margin-top: -25px;
+  display: inline-block;
+  color: $text-black !important;
+}
+
+#cancel-button a:hover, #cancel-button a:focus, #cancel-button a:active {
+  text-decoration: none !important;
+  color: $dark-gray !important;
+}

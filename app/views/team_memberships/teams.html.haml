@@ -1,0 +1,31 @@
+%div.col-md-8
+  %h2.non-box-text Your Teams
+  %div.content-box-pure
+    %div.row.block-content#team-header-row
+      %div.col-md-6
+        %p= link_to '← Home', home_url, :class => 'gray-link'
+      %div.col-md-6
+        %p.text-right
+          %span#team-num-indicator
+            = @teams_num
+          %span
+            Teams
+    - @teams.each do |team|
+      %div.team-line.block-pure
+        = link_to team[0].name, team_page_url(urlify(team[1].name), urlify(team[0].name)), :class => 'black-link'
+        %span
+          \-
+          = link_to team[1].name, organization_page_url(team[1].name), :class => 'gray-link'
+
+    %hr
+    %div.row.col-md-offset-4.col-xs-offset-1
+      %div.col-md-2.col-xs-3
+        = link_to("←", teams_pagina_path(@page - 1), :class => 'button-prev-next') unless @page <= 1
+      %div.col-md-2.col-xs-3
+        = link_to("→", teams_pagina_path(@page + 1), :class => 'button-prev-next') unless @is_last_page
+
+%div.col-md-3.col-md-offset-1
+  %h2.non-box-text &nbsp;
+  %ul.nav-list
+    %li.nav-list-item
+      = link_to "See all teams →", all_organizations_path, :class => 'text-center'

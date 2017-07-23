@@ -1,0 +1,40 @@
+//=========================================================================
+// Imports
+//=========================================================================
+
+@import 'compass/css3/box-shadow';
+@import 'compass/css3/transition';
+@import 'compass/css3/images';
+@import 'compass/css3/transform';
+
+
+//=========================================================================
+// Colors
+//=========================================================================
+
+$transparent-red: rgba(255, 0, 0, 0.2);
+
+// $light-gray: #EAEAEA;
+$light-gray: #ECE6DA;
+$dark-gray: #AEAEAE;
+
+$white: #FEFEFE;
+$text-black: #626262;
+
+// Buttons
+$button-primary-bg: #5DB2FF;
+$button-default-bg: lighten($dark-gray, 20%);
+
+// Basics
+$red: #FF0000;
+$light-red: lighten(#FF1111, 40%);
+$light-green: lighten(#11FF11, 40%);
+$light-blue: #E3EBEE;
+$yellow: #FEC600;
+
+
+//=========================================================================
+// Diverse Variables
+//=========================================================================
+
+$content-box-padding: 25px;

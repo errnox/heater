@@ -1,0 +1,84 @@
+@import 'base';
+
+.event-form {
+  textarea, input[type=text] {
+    min-height: 70px;
+  }
+
+  textarea:focus {
+    height: 140px;
+    background-color: $white;
+    transition: all 350ms ease-out;
+    position: absolute;
+    top: -20px;
+    left: -5px;
+    z-index: 9999;
+  }
+
+  textarea {
+    background-color: lighten($dark-gray, 30%);
+  /* transition: all 350ms ease-out; */
+  }
+
+  input[type=submit] {
+    margin-top: 15px;
+  }
+}
+
+.metric-type-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: lighten($dark-gray, 27%);
+  border-bottom: 1px solid lighten($dark-gray, 17%);
+  border-top: 1px solid lighten($white, 17%);
+}
+
+#new-event-box {
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 50px;
+  .row {
+    margin: 10px;
+  }
+  .metric-type-row {
+    margin: 0;
+  }
+}
+
+#metric-type-index {
+  color: lighten($dark-gray, 17%) !important;
+  padding-top: 15px;
+  font-size: 2.0em;
+  font-weight: bold;
+}
+
+#join-button {
+  @media (max-width: 920px) {
+    margin-top: 20px;
+  }
+}
+
+#newly-created-events {
+  padding: $content-box-padding;
+}
+
+.event-time-stamp {
+  text-align: right;
+  position: relative;
+  float: right;
+  right: 0;
+  top: 0;
+  border: 1px solid $dark-gray;
+  padding: 2px;
+  border-radius: 3px;
+  min-width: 180px;
+  text-align: center;
+  color: $dark-gray;
+}
+
+.event-row {
+  @media (max-width: 992px) {
+    min-height: 130px !important;
+    display: inline-block;
+  }
+}

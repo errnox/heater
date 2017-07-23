@@ -1,0 +1,10 @@
+@import "base";
+
+input.ng-dirty.ng-invalid {
+  /* background-color: $light-red !important; */
+  @include box-shadow(0 0 0 2px $red inset);
+}
+
+.error-message {
+  color: $red !important;
+}

@@ -1,0 +1,352 @@
+@import 'base';
+
+$cancel-movement-button-padding: 10px;
+.cancel-movement-button {
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: $white;
+  width: 100%;
+  @include transition(all, 350ms, ease-out);
+  padding-top: $cancel-movement-button-padding;
+  padding-bottom: $cancel-movement-button-padding;
+  z-index: 99999;
+}
+
+.cancel-movement-button {
+  &:before {
+    content: "× ";
+    font-size: 1.5em;
+    font-weight: bold;
+  }  font-size: 1.2em;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: $white;
+  }
+  font-weight: bold;
+  text-decoration: none;
+}
+
+$move-button-target-height: 55px;
+.move-button-source-container {
+  padding: 0 !important;
+  height: 20px;
+  margin-top: -30px;
+  margin-left: 10px;
+  margin-bottom: 30px;
+}
+
+.move-button-source {
+  &:hover, &:focus, &:active {
+    color: $text-black !important;
+    text-decoration: none;
+  }
+  color: darken($dark-gray, 10%);
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 1px 1px $white;
+}
+
+.move-button-target-container {
+  padding: 0 !important;
+  height: $move-button-target-height;
+}
+
+@media (max-width: 992px) {
+  .move-button-target {
+    margin-left: 15px;
+  }
+  .move-button-target-container {
+    width: 100% !important;
+  }
+}
+
+.move-button-target {
+  &:hover, &:focus, &:active {
+    color: $white;
+    text-decoration: none;
+    background-color: $dark-gray;
+  }
+  color: $text-black;
+  @include transition(height, 350ms, ease-out);
+  height: $move-button-target-height;
+  text-decoration: none;
+  padding-top: $move-button-target-height / 3;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.metric {
+  padding-bottom: $move-button-target-height;
+}
+
+.metric-row {
+  @include box-shadow(0 0 2px darken($light-blue, 15%));
+  border-radius: 5px;
+  border-top: 40px solid $light-blue;
+  @include transition(all, 250ms, ease-out);
+}
+
+label:checked {
+  background-color: red !important;
+}
+
+
+.metric-number {
+  font-size: 2.8em;
+  font-weight: bold;
+  display: absolute;
+  float: right;
+  margin-top: -117px;
+  margin-right: 3px;
+  color: $white;
+}
+
+.metric-name {
+  font-size: 1.9em;
+  padding-left: 10px;
+}
+
+.btn-negative {
+  background-color: $light-red !important;
+  color: darken($light-red, 20%) !important;
+  font-weight: bold !important;
+}
+
+.btn-indifferent {
+  background-color: darken($white, 5%) !important;
+  color: darken($white, 50%) !important;
+  font-weight: bold !important;
+}
+
+.btn-positive {
+  background-color: $light-green !important;
+  color: #12AE12 !important;
+  font-weight: bold !important;
+}
+
+$metric-shift-amount: 50px;
+@media (max-width: 992px) {
+  $metric-shift-amount: 25px;
+}
+
+.negative-metric {
+  background-color: darken($light-red, 5%) !important;
+  @include translateX(-$metric-shift-amount);
+}
+
+.indifferent-metric {
+  background-color: $white !important;
+}
+
+.positive-metric {
+  background-color: darken($light-green, 5%) !important;
+  display: absolute;
+  @include translateX($metric-shift-amount);
+}
+
+.metric-value-buttons {
+  @include box-shadow(0 10px 10px -10px $text-black);
+  margin-bottom: 10px;
+
+  margin: 0;
+  * {
+    border-radius: 0 !important;
+  }
+}
+
+.metric {
+  .content-box {
+    padding: 0;
+  }
+}
+
+.description-toggle {
+  a {
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+      color: $dark-gray;
+    }
+    color: $dark-gray;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: -80px;
+  }
+
+  margin-bottom: 20px;
+}
+
+.metric-description pre {
+  font-family: Helvetica;
+  border: none;
+  background-color: $white;
+  color: $text-black;
+  margin-left: 10px;
+}
+
+.submission-box {
+  margin-bottom: 200px;
+}
+
+#team-header {
+  margin-bottom: 50px;
+  h3 a, p a {
+    color: $text-black;
+    text-decoration: none;
+    &:hover {
+      color: $dark-gray;
+      text-decoration: none;
+    }
+    &:active, &:focus {
+      color: $text-black;;
+      text-decoration: none;
+    }
+  }
+  h3 a:hover {
+    color: $button-primary-bg;
+    text-decoration: none;
+  }
+}
+
+#navigation-box {
+  .btn {
+    width: 150px;
+    margin: 10px;
+  }
+}
+
+.metrics-box-scaled {
+  @include transform(scale(0.7));
+  @include single-transition(all, 350ms, ease-out, 0ms);
+  opacity: 1;
+  .move-button-target {
+    font-size: 1.8em;
+    margin-bottom: 30px;
+  }
+}
+
+#metrics-box {
+  @include single-transition(all, 250ms, ease-out, 0ms);
+}
+
+.metrics-sidebar-list {
+  position: fixed;
+  @media (max-width: 992px) {
+    display: none;
+  }
+  top: 0;
+  padding-top: (2 * $cancel-movement-button-padding) + 60px;
+  z-index: 99997;
+  left: 0;
+  min-width: 200px;;
+  max-width: 26%;
+  max-height: 100%;
+  overflow: auto;
+  padding-left: 5px;
+  .rank-number {
+    color: $dark-gray;
+    display: inline-block;
+    width: 20px;
+  }
+  .metrics-sidebar-source {
+    &:focus {
+      color: $dark-gray !important;
+    }
+
+    strong {
+      color: $dark-gray;
+    }
+  }
+  .metrics-sidebar-target {
+    &:focus, &:active {
+      color: darken($white, 15%);
+    }
+    border-bottom: 1px solid darken($white, 15%);
+    color: darken($white, 15%);
+    display: block;
+    padding: 0;
+    margin: 0;
+    line-height: 10px;
+    padding: 5px;
+    text-decoration: none;
+    @include single-transition(all, 350ms, ease-out, 0ms);
+    margin-right: -15px !important;
+
+    span {
+      color: rgba(255, 255, 255, 0.0);
+      margin-right: 5px;
+      @include single-transition(all, 350ms, ease-out, 0ms);
+    }
+
+    &:hover {
+      border-bottom: 1px solid $red;
+      color: $red;
+      text-decoration: none;
+      @include single-transition(all, 350ms, ease-out, 0ms);
+
+      span {
+        color: $red;
+        @include single-transition(all, 350ms, ease-out, 0ms);
+      }
+    }
+  }
+  .metrics-sidebar-line {
+    margin-bottom: 2px;
+    padding-left: 5px;
+  }
+  background-color: rgba(0, 0, 0, 0.1);
+  background-color: $white;
+  padding-right: 25px;
+  height: 100%;
+  @include single-transition(all, 350ms, ease-out, 0ms);
+  border-right: 1px solid lighten($dark-gray, 5%);
+  opacity: 1;
+  &.ng-hide-add, &.ng-hide-remove, &.ng-hide {
+    @include box-shadow(0 0 50px 50px $white);
+    display: block !important;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.metrics-sidebar-toggle {
+  @media (max-width: 992px) {
+    display: none;
+  }
+  position: fixed;
+  top: (2 * $cancel-movement-button-padding) + 30px;
+  left: 0;
+  padding-left: 5px;
+  display: inline-block;
+  z-index: 99998;
+  background-color: $white;
+  min-width: 120px;
+  border-bottom: 1px solid lighten($dark-gray, 5%);
+  padding-right: 5px;
+  &:hover {
+    padding-left: 25px;
+  }
+  @include single-transition(all, 350ms, ease-out, 0ms);
+}
+
+#submission-flash {
+  min-height: 30px;
+}
+
+#metrics-page-event-name {
+  font-size: 2.4em;
+  font-weight: bold;
+  text-shadow: 1px 1px $dark-gray;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: darken($white, 5%);
+  @media (max-width: 992px) {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}

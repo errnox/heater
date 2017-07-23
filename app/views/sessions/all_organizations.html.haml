@@ -1,0 +1,53 @@
+%div.col-md-8
+  %h2.non-box-text All Organizations
+
+  %div.content-box-pure
+
+    %div.row.block-content
+      %div.col-md-6
+        %p= link_to '← Home', home_url, :class => 'gray-link'
+      %div.col-md-6
+        %p.text-right
+          %strong
+            = @organizations_num
+          Orgs.,
+          %strong
+            = @teams_num
+          Teams
+    - @organizations.each do |organization|
+      %div.block-pure.organization-container
+        %strong
+          = link_to organization[0].name, organization_page_path(urlify(organization[0].name)), :class => 'black-link'
+        %p
+          - organization[1].each_with_index do |team, i|
+            %span= link_to team.name, team_page_path(urlify(organization[0].name), urlify(team.name)), :class => 'gray-link'
+            = i < (organization[1].length - 1) ? ', ' : ''
+        - if organization[1].length > 0
+          %p.text-right
+            %span.team-count
+              = organization[1].length
+              = organization[1].length == 1 ? 'team' : 'teams'
+
+    %hr
+    %div.row.col-md-offset-4.col-xs-offset-1
+      %div.col-md-2.col-xs-3
+        = link_to("←", all_organizations_pagina_path(@page - 1), :class => 'button-prev-next') unless @page <= 1
+      %div.col-md-2.col-xs-3
+        = link_to("→", all_organizations_pagina_path(@page + 1), :class => 'button-prev-next') unless @is_last_page
+
+    - unless @page <= 1
+      %p.text-right.block-content
+        = link_to '← First page', all_organizations_url, :class => 'gray-link'
+
+
+%div.col-md-4
+  %h2.non-box-text Create Organization
+  %div.content-box
+    = flash[:notice]
+    = form_tag(:method => 'create_organization') do
+      %p
+        Name:
+        = text_field_tag :name, nil, {:class => 'form-control', :placeholder => 'New organization name'}
+        Description:
+        = text_area_tag :description, nil, {:class => 'form-control', :placeholder => 'Description for the new organization'}
+      = submit_tag 'Create', {:class => 'btn btn-primary'}

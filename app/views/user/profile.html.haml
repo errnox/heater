@@ -1,0 +1,15 @@
+%h2.non-box-text
+  %i.fa.fa-user
+  Profile
+%div.content-box
+  %h3= @user.name
+  %p
+    Member since:
+    %strong
+      = @user.created_at
+    \.
+  %h3 Teams
+  %ul
+    - @teams.each do |team|
+      %li
+        = link_to team[0].name, team_page_path(urlify(team[1].name), urlify(team[0].name))

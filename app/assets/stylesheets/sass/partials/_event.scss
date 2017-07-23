@@ -1,0 +1,135 @@
+@import "base";
+
+#event-header {
+  div a {
+    color: $dark-gray !important;
+  }
+  .btn {
+    width: 150px;
+  }
+}
+
+#event-header-name {
+  font-size: 2.4em;
+  font-weight:  bold;
+  text-shadow: 1px 1px lighten($dark-gray, 10%);
+}
+
+#no-submissions-info {
+  margin-top: 50px;
+  height: 50px !important;
+}
+
+$ranking-row-height: 30px;
+.ranking-row {
+  min-height: $ranking-row-height;
+  display: inline-block;
+}
+
+.ranking-row-number {
+  color: $white;
+  background-color: $dark-gray;
+  border-radius: 3px;
+  padding: 3px;
+  width: $ranking-row-height - 5px;
+  height: $ranking-row-height - 5px;
+  display: inline-block;
+}
+
+.ranking-box {
+  padding-bottom: 50px !important;
+}
+
+#members-info-box {
+  background-color: $white;
+  height: $ranking-row-height + 10;
+  margin-top: $ranking-row-height;
+  padding-top: ($ranking-row-height / 5);
+}
+
+.highlighted-number {
+  border: 1px solid $dark-gray;
+  border-radius: 3px;
+  padding: 3px;
+  display: inline-block;
+  width: ($ranking-row-height - 3);
+}
+
+$user-overlay-padding: 10px;
+.user-overlay {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  background-color: $white;
+  @include box-shadow(0 0 10px $text-black);
+  padding: $user-overlay-padding;
+  border-radius: 5px;
+  top: 10%;
+  left: 10%;
+  height: 80%;
+  width: 80%;
+  padding-top: $user-overlay-padding * 2;
+  overflow: auto;
+}
+
+.user-overlay-background {
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 99998;
+  top: 0;
+  left: 0;
+}
+
+.user-overlay-close-button {
+  &:hover, &:focus, &:active {
+    color: lighten($dark-gray, 5%);
+    text-decoration: none;
+  }
+  font-weight: bold;
+  font-size: 2.2em;
+  color: $dark-gray;
+  text-decoration: none;
+  padding-right: $user-overlay-padding;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 99999;
+}
+
+.user-info-button {
+  &:hover, &:focus, &:active {
+    background-color: lighten($dark-gray, 10%);
+    color: $text-black;
+    text-decoration: none;
+  }
+  color: $white;
+  font-weight: bold;
+  display: inline-block;
+  width: 22px;
+  width: 22px;
+  border-radius: 3px;
+  background-color: lighten($button-primary-bg, 10%);
+  padding: 3px;
+  @include transition(all 200ms ease-out);
+}
+
+#overlay-metric-types {
+  margin-top: 60px;
+}
+
+.argh-line {
+  border-bottom: 5px solid darken($light-red, 20%);
+  margin-bottom: 10px;
+}
+
+.ok-line {
+  border-bottom: 5px solid $dark-gray;
+  margin-bottom: 10px;
+}
+.yeah-line {
+  border-bottom: 5px solid #12AE12;
+  margin-bottom: 10px;
+}

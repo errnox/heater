@@ -1,0 +1,34 @@
+%div.col-md-8
+  %h2.non-box-text Organization Memberships
+  %div.content-box
+    %p.text-right
+      = link_to "Show all organizations →", all_organizations_url, :class =>  'text-right gray-link'
+    - if @organizations.length == 0
+      %p You are a not a member of any organization yet.
+      %p
+        You have to
+        = link_to 'join a team first', all_organizations_url
+        \.
+    - elsif @organizations.length == 1
+      %p You are a member of this organization:
+    - else
+      %p You are a member of these organizations:
+    %ul
+      - @organizations.each do |organization|
+        %li= link_to organization.name, organization_page_path(urlify(organization.name)), :class => 'gray-link'
+
+    %hr
+    %p.text-center= link_to 'Go to profile', home_url, :class => 'black-link'
+
+
+%div.col-md-4
+  %h2.non-box-text Create Organization
+  %div.content-box
+    = flash[:notice]
+    = form_tag(:method => 'create_organization') do
+      %p
+        Name:
+        = text_field_tag :name, nil, {:class => 'form-control', :placeholder => 'New organization name'}
+        Description:
+        = text_area_tag :description, nil, {:class => 'form-control', :placeholder => 'Description for the new organization'}
+      = submit_tag 'Create', {:class => 'btn btn-primary'}

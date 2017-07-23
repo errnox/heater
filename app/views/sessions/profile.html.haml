@@ -1,0 +1,31 @@
+%div.container
+  %div.col-md-12.container
+    %div.col-md-8
+      %h2.non-box-text Profile
+      %div.content-box
+        %p
+          Hello,
+          %strong
+            = @current_user.name
+          , this is your profile page.
+
+        %h3 Info
+
+        %p
+          Member since:
+          %strong
+            = @current_user.created_at.to_formatted_s(:long_ordinal)
+        %p
+          Last changes to account:
+          %strong
+            = @current_user.updated_at.to_formatted_s(:long_ordinal)
+
+    %div.col-md-4
+      %h2.non-box-text Change Email
+      %div.content-box
+        = flash[:notice]
+        = form_tag(:method => "change_email") do
+          %p
+            New email address:
+            = text_field_tag :new_email, @current_user.email, {:class => 'form-control'}
+          = submit_tag 'Set new email', {:class => 'btn btn-primary'}

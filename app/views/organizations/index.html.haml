@@ -1,0 +1,32 @@
+%div.col-md-8
+  %h2.non-box-text Organization
+  %div.content-box
+    %p.text-right
+      = link_to "Show all organizations", all_organizations_url, :class => 'text-right gray-link'
+    %h3= @organization.name
+    %pre.beautiful-pre= @organization.description
+
+    %h3
+      Teams
+      (
+      = @teams.length
+      )
+    %ul
+      - @teams.each do |team|
+        %li= link_to team.name, team_page_path(urlify(@organization.name), urlify(team.name))
+    %hr
+    %p.text-center= link_to 'Show my organization memberships', organizations_path
+
+
+%div.col-md-4
+  %h2.non-box-text Add A New Team
+  %div.content-box
+    = form_tag(:method => 'create_team') do
+      %p
+        Name:
+        = text_field_tag :name, nil, {:class => 'form-control'}
+      %p
+        Description:
+        = text_area_tag :description, nil, {:class => 'form-control'}
+        = hidden_field_tag :organization_id, @organization.id
+      = submit_tag 'Create', {:class => 'btn btn-primary'}

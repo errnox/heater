@@ -1,0 +1,123 @@
+%div.col-md-12.container
+  %div.content-box#event-header
+    %div
+      %span= link_to @organization.name, organization_page_path(@organization.name)
+      \/
+      %span= link_to @team.name, team_page_path(@organization.name, @team.name)
+    %p#event-header-name.text-center= @event.name
+    %hr
+
+    %p.text-center
+      - if @user_has_submitted_metrics
+        = link_to 'Submit again', metrics_path(urlify(@organization.name), urlify(@team.name), @event.id), {:class => 'btn btn-default'}
+      - else
+        = link_to 'Submit', metrics_path(urlify(@organization.name), urlify(@team.name), @event.id), {:class => 'btn btn-primary'}
+
+%div.col-md-12
+  %div#members-info-box
+    - if @already_submitted_users.length == @team_members.length
+      %p.text-center ✓ All users have submitted
+    - else
+      %p.text-center
+        Submissions:
+        %strong.highlighted-number= @already_submitted_users.length
+        of
+        %strong.highlighted-number= @team_members.length
+
+
+- if !@no_submissions_yet
+  %div
+    %div.col-md-6.container
+      %h2.non-box-text Values
+      %div.content-box.ranking-box
+        %p
+          This is how the team members
+          %strong value
+          the event metrics:
+        - @metrics_ranked_by_value.each_with_index do |ranked_metrics, i|
+          %p.ranking-row
+            %div.col-md-12.row
+              %div.col-md-2.col-xs-2.text-center
+                %span.ranking-row-number= i + 1
+              %div.col-md-10.col-xs-8
+                - ranked_metrics.each_with_index do |ranked_metric, j|
+                  %span.underlined= ranked_metric
+                  = j < (ranked_metrics.length - 1) ? ', ' : ''
+
+
+    %div.col-md-6.container
+      %h2.non-box-text Ranks
+      %div.content-box.ranking-box
+        %p
+          This is how the team members
+          %strong rank
+          the event metrics:
+        - @metrics_ranked_by_rank.each_with_index do |ranked_metrics, i|
+          %p.ranking-row
+            %div.col-md-12.row
+              %div.col-md-2.col-xs-2.text-center
+                %span.ranking-row-number= i + 1
+              %div.col-md-10.col-xs-8
+                - ranked_metrics.each_with_index do |ranked_metric, j|
+                  %span.underlined= ranked_metric
+                  = j < (ranked_metrics.length - 1) ? ', ' : ''
+
+    %div.col-md-12
+      %h2.non-box-text Submissions
+      %div.content-box
+        - if @already_submitted_users.length > 0
+          %p Team members who have already submitted:
+        %div
+          - @already_submitted_users.each_with_index do |user, i|
+            = link_to user.name, user_profile_page_path(user.name)
+            %a.user-info-button.text-center{:href => 'javascript:void(0)', 'onclick' => "document.getElementById(\"user-overlay-#{i}\").style.display = \"block\"; document.getElementById(\"user-overlay-background-#{i}\").style.display = \"block\";"} ?
+            %div.user-overlay-background{:id => "user-overlay-background-#{i}", 'onclick' => "document.getElementById(\"user-overlay-#{i}\").style.display = \"none\"; document.getElementById(\"user-overlay-background-#{i}\").style.display = \"none\";"}
+            %div.user-overlay{:id => "user-overlay-#{i}" }
+              %a.user-overlay-close-button{:href => 'javascript:void(0)', 'onclick' => "document.getElementById(\"user-overlay-#{i}\").style.display = \"none\"; document.getElementById(\"user-overlay-background-#{i}\").style.display = \"none\";"} ×
+              %div
+                %div.col-md-10
+                  %div.col-md-2
+                    %p
+                      %strong= user.name
+                  %div.col-md-10
+                    - @user_metrics[user.name]['metrics'].each_with_index do |metric, i|
+                      %p.ranking-row.row
+                        %div.col-md-1.col-xs-2.text-center
+                          %span.ranking-row-number= i + 1
+                        %div.col-md-11.col-xs-10
+                          %p= metric.name
+
+                %div.col-md-10.col-md-offset-2.row#overlay-metric-types
+                  %div.col-md-4.col-xs-12
+                    %p
+                      %strong.argh-line Argh!
+                    - @user_metrics[user.name]['metrics'].each_with_index do |metric, i|
+                      %p= metric.name if metric.value < 0
+                  %div.col-md-4.col-xs-12
+                    %p
+                      %strong.ok-line OK.
+                    - @user_metrics[user.name]['metrics'].each_with_index do |metric, i|
+                      %p= metric.name if metric.value == 0
+                  %div.col-md-4.col-xs-12
+                    %p
+                      %strong.yeah-line Yeah!
+                    - @user_metrics[user.name]['metrics'].each_with_index do |metric, i|
+                      %p= metric.name if metric.value > 0
+
+          %hr
+        - if @not_yet_submitted_users.length > 0
+          %p Team members who have not submitted yet:
+        %div
+          - @not_yet_submitted_users.each_with_index do |user, i|
+            = link_to user.name, user_profile_page_path(user.name)
+            = i < (@not_yet_submitted_users.length - 1) ? ', ' : ''
+
+    %div.col-md-12
+      %h2.non-box-text Descriptions
+      %div.content-box.col-md-12.container
+        - @metric_types.each do |metric_type|
+          %div.col-xs-12.row
+            %hr
+            %div.col-xs-12
+              %strong= metric_type.name
+              = find_and_preserve "<pre class=\"description-pre col-xs-12\">#{metric_type.description}</pre>"

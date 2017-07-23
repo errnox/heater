@@ -1,0 +1,57 @@
+%div.col-md-3
+  %div.col-md-12
+    %ul.nav-list
+      %li.nav-list-item= link_to 'Settings', settings_url
+      %li.nav-list-item= link_to 'Profile', profile_url
+      %li.nav-list-item= link_to 'Unsubmitted Events', unsubmitted_events_url
+      %li.nav-list-item= link_to 'All Organizations', all_organizations_url
+      %li.nav-list-item= link_to 'Organization Memberships', organizations_url
+      %li.nav-list-item= link_to 'Team Memberships', teams_url
+
+%div.col-md-9
+  %div.content-box
+    %p
+      Hello,
+      %strong
+        = @current_user.name
+      !
+    %hr
+
+    %div#unsubmitted-events-box
+      %h3
+        %i.fa.fa-th-list
+        Latest events
+      - if @latest_unsubmitted_events.length == 0
+        %p.text-center No events
+      - if @latest_unsubmitted_events.length > 0
+        - @latest_unsubmitted_events.each do |event|
+          %div.list-row.row
+            %div.col-md-2.event-date= event[2].created_at.to_formatted_s :short
+            %div.col-md-4= link_to event[2].name, event_page_path(urlify(event[0].name), urlify(event[1].name), event[2].id)
+            %div.col-md-6
+              = link_to event[0].name, organization_page_path(urlify(event[0].name)), {:class => 'link-tertiary'}
+              \/
+              = link_to event[1].name, team_page_path(urlify(event[0].name), urlify(event[1].name)), {:class => 'link-tertiary'}
+
+    %div.row.text-center#see-all-link= link_to 'see all (' + @unsubmitted_events.length.to_s + ')', unsubmitted_events_url if @latest_unsubmitted_events.length > 0
+
+    %div.row
+      %div.col-md-3
+        %p
+          %i.fa.fa-users
+          Teams
+      %div.col-md-9
+        - @teams.each_with_index do |team, i|
+          -# = link_to team[0].name, team_page_url(urlify(team[1].name), urlify(team[0].name))
+          = link_to team[0].name, team_page_url(urlify(team[1].name), urlify(team[0].name))
+          = i < (@teams.length - 1) ? ', ' : ''
+
+    %div.row
+      %div.col-md-3
+        %p
+          %i.fa.fa-building-o
+          Organizations
+      %div.col-md-9
+        - @organizations.each_with_index do |organization, i|
+          = link_to organization.name, organization_page_url(urlify(organization.name))
+          = i < (@organizations.length - 1) ? ', ' : ''

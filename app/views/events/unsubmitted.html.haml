@@ -1,0 +1,17 @@
+%div.col-md-12
+  %h2.non-box-text Unsubmitted Events
+  %div.content-box
+    %p.text-center These are the events that you have not submitted metrics for yet:
+
+    - @unsubmitted_events.keys.each do |organization_name|
+      - @unsubmitted_events[organization_name].keys.each do |team_name|
+        %hr
+        %div.list-row
+          %span= link_to organization_name, organization_page_path(urlify(organization_name)), {:class => 'gray-link'}
+          \/
+          %span= link_to team_name, team_page_path(urlify(organization_name), urlify(team_name)), {:class => 'gray-link'}
+          - @unsubmitted_events[organization_name][team_name].each do |events|
+            %p
+              - events.each_with_index do |event, i|
+                %span= link_to event.name, event_page_path(urlify(organization_name), urlify(team_name), event.id)
+                = i < (events.length - 1)? ', ': ''

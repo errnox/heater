@@ -1,0 +1,15 @@
+@import "base";
+
+.team-line {
+  min-height: 50px;
+  @include background-image(linear-gradient(left, $white, $light-blue));
+}
+
+#team-header-row {
+  border-bottom: 1px solid darken($white, 15%);
+  margin: 0;
+}
+
+#team-num-indicator {
+  font-size: 2.3em;
+}

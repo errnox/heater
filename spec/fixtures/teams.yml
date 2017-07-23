@@ -1,0 +1,19 @@
+one:
+  name: Super Team
+  description: This is Super Team.
+  organization_id: 1
+
+two:
+  name: Best Team
+  description: This is Best Team.
+  organization_id: 2
+
+three:
+  name: Great Team
+  description: This is Best Team.
+  organization_id: 1
+
+four:
+  name: Amazing Team
+  description: This is Amazing Team.
+  organization_id: 1

@@ -1,0 +1,8 @@
+metricsApp.service('metricsService', function() {
+  return {
+    organization: <%= @organization.to_json.html_safe %>,
+    currentUser: <%= @user.to_json.html_safe %>,
+    metricTypes: <%= @metric_types.to_json.html_safe %>,
+    metricsSubmissionURL: <%= metrics_submission_path(urlify(@organization.name), urlify(@team.name), @event.id).to_json.html_safe %>,
+    eventURL: <%= event_page_path(urlify(@organization.name), urlify(@team.name), @event.id).to_json.html_safe %>,
+  }});

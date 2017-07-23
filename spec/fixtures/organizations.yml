@@ -1,0 +1,11 @@
+one:
+  name: BigCorp
+  description: This is BigCorp.
+
+two:
+  name: BiggerCorp
+  description: This is BiggerCorp.
+
+three:
+  name: BiggestCorp
+  description: This is BiggestCorp.

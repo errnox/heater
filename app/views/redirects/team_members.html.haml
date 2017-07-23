@@ -1,0 +1,11 @@
+%div.col-md-12.container
+  %div.content-box
+    %h3.text-center Members Only
+    %hr
+    %p.text-center Only team members can visit this page
+    %p.text-center
+      You can join
+      %strong= @team.name
+      on its
+      = link_to 'team page', team_page_path(@organization.name, @team.name)
+      \.

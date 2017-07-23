@@ -1,0 +1,18 @@
+@import "base";
+
+#see-all-link {
+  a {
+    color: $dark-gray;
+  }
+  padding-top: 5px;
+  padding-bottom: 35px;
+}
+
+#unsubmitted-events-box {
+  .event-date {
+    color: $text-black;
+  }
+}
+
+* {
+}

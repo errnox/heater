@@ -1,0 +1,52 @@
+teamApp.service('teamInitializer', function() {
+  return {
+    events: <%= @events.to_json.html_safe %>,
+    userProfileURL: <%= user_profile_page_url('').to_json.html_safe %>,
+    metricsURL: <%= metrics_path(urlify(@organization.name), urlify(@team.name), '_').to_json.html_safe %>,
+    eventPageURL: <%= event_page_path(urlify(@organization.name), urlify(@team.name), '_').to_json.html_safe %>,
+    team: <%= @team.to_json.html_safe %>,
+    userIsTeamMember: <%= @user_is_team_member.to_json.html_safe %>,
+    teamMembers: <%= @team_members.to_json.html_safe %>,
+    currentUser: <%= @currentUser.to_json.html_safe %>,
+    eventPagesTotal: <%= @pages_total.to_json.html_safe %>,
+    eventsSearchURL: <%= team_events_search_path(urlify(@organization.name), urlify(@team.name)).to_json.html_safe %>,
+    eventPresets: {
+      'CHAMPFROGS': {
+        'Curiosity': 'I have plenty of things to investigate and to think about.',
+        'Honor': 'I feel proud that my personal values are reflected in how I work.',
+        'Acceptance': 'The people around me approve of what I do and who I am.',
+        'Mastery': 'My work challenges my competence but it is still within my abilities.',
+        'Power': 'There’s enough room for me to influence what happens around me.',
+        'Freedom': 'I am independent of others with my work and my responsibilities.',
+        'Relatedness': 'I have good social contacts with the people in my work.',
+        'Order': 'There are enough rules and policies for a stable environment.',
+        'Goal': 'My purpose in life is reflected in the work that I do.',
+        'Status': 'My position is good, and recognized by the people who work with me.',
+      },
+      'Declaration of Independence': {
+        'Life': 'You know that one, right?',
+        'Liberty': 'Highly relative measure of freedom',
+        'Happiness': 'Basically a good feeling in general',
+      },
+      'Maslow': {
+        'Physiological': '- breathing\n- food\n- water\n- sex\n- sleep\n- homeostasis (tendency of an organism to regulate its internal conditions)\n- excretion',
+        'Safety': 'Security of:\n- body\n- employment\n- resources\n- morality\n- the family\n- health\n- property',
+        'Love/belonging': '- friendship\n- family\n- sexual intimacy',
+        'Esteem': '- self-esteem\n- confidence\n- achievement\n- respect of others\n- respect by others',
+        'Self-actualization': '- morality\n- creativity\n- spontaneity\n- problem solving\n- lack of prejudice\n- acceptance of facts',
+      },
+      'SCARF': {
+        'Status': 'My position is good, and recognized by the people who work with me.',
+        'Certainty': 'There are enough rules and policies for a stable environment.',
+        'Autonomy': 'I am independent of others with my work and my responsibilities.',
+        'Relatedness': 'I have good social contacts with the people in my work.',
+        'Fairness': 'I feel proud that my personal values are reflected in how I work. (Your definition may vary.)',
+      },
+      'Self-Determination Theory': {
+        'Competence': 'My work challenges my competence but it is still within my abilities.',
+        'Relatedness': 'I have good social contacts with the people in my work.',
+        'Autonomy': 'I am independent of others with my work and my responsibilities.',
+      },
+    },
+  };
+});
